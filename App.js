@@ -3,18 +3,18 @@ import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './screens/Home'
-
-function HomeScreen() {
-  return (
-    <Home />
-  );
-}
+import Agenda from './screens/Agenda'
 
 function AgendaScreen() {
   return (
+    <Agenda/>
+  );
+}
+
+function TodayScreen() {
+  return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
+      <Text>Today!</Text>
     </View>
   );
 }
@@ -22,14 +22,6 @@ function AgendaScreen() {
 function StopWatchScreen() {
   return (
     <></>
-  );
-}
-
-function TodaySreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Today!</Text>
-    </View>
   );
 }
 
@@ -56,13 +48,13 @@ export default class App extends Component {
                 iconName = focused
                   ? 'md-calendar'
                   : 'md-calendar-sharp';
-              } else if (route.name === 'Settings') {
-                iconName = focused ? 'ios-list-outline' : 'ios-list';
-              } else if (route.name === 'StopWatch') {
-                iconName = focused ? 'play-outline' : 'play';
+              } else if (route.name === 'Agenda') {
+                iconName = focused ? 'md-list-outline' : 'md-list';
               } else if (route.name === 'Today') {
                 iconName = focused ? 'pencil-outline' : 'pencil';
-              } else if (route.name === 'Statistics') {
+              } else if (route.name === 'StopWatch') {
+                iconName = focused ? 'play-outline' : 'play';
+              }  else if (route.name === 'Statistics') {
                 iconName = focused ? 'ios-bar-chart-outline' : 'ios-bar-chart';
               }
 
@@ -75,10 +67,9 @@ export default class App extends Component {
             inactiveTintColor: 'gray',
           }}
         >
-          <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Agenda" component={AgendaScreen} />
+          <Tab.Screen name="Today" component={TodayScreen} />
           <Tab.Screen name="StopWatch" component={StopWatchScreen} />
-          <Tab.Screen name="Today" component={TodaySreen} />
           <Tab.Screen name="Statistics" component={StatisticsSreen} />
         </Tab.Navigator>
       </NavigationContainer>
