@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from './screens/Home'
 
 function HomeScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
+    <Home />
   );
 }
 
-function SettingsScreen() {
+function AgendaScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Settings!</Text>
@@ -22,9 +21,7 @@ function SettingsScreen() {
 
 function StopWatchScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>StopWatch!</Text>
-    </View>
+    <></>
   );
 }
 
@@ -69,7 +66,6 @@ export default class App extends Component {
                 iconName = focused ? 'ios-bar-chart-outline' : 'ios-bar-chart';
               }
 
-
               // You can return any component that you like here!
               return <Icon name={iconName} size={size} color={color} />;
             }
@@ -80,7 +76,7 @@ export default class App extends Component {
           }}
         >
           <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="Agenda" component={AgendaScreen} />
           <Tab.Screen name="StopWatch" component={StopWatchScreen} />
           <Tab.Screen name="Today" component={TodaySreen} />
           <Tab.Screen name="Statistics" component={StatisticsSreen} />
@@ -89,3 +85,9 @@ export default class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  calendar: {
+    marginTop: 5
+  }
+});

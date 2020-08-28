@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 
-export default class App extends Component {
+export default class Stopwatch extends Component {
     constructor(props) {
         super(props);
         this.state = {
             stopwatchStart: false,
-            stopwatchReset: false,
+            stopwatchReset: false
         };
         this.toggleStopwatch = this.toggleStopwatch.bind(this);
         this.resetStopwatch = this.resetStopwatch.bind(this);
