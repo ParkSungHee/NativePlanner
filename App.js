@@ -3,7 +3,8 @@ import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Agenda from './screens/Agenda'
+import Agenda from './screens/Agenda';
+import Statistics from './screens/Statistics';
 
 function AgendaScreen() {
   return (
@@ -27,9 +28,7 @@ function StopWatchScreen() {
 
 function StatisticsSreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Statistics!</Text>
-    </View>
+    <Statistics/>
   );
 }
 
