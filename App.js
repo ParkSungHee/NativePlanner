@@ -5,18 +5,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Agenda from './screens/Agenda';
 import Statistics from './screens/Statistics';
+import Today from './screens/Today';
 
 function AgendaScreen() {
   return (
-    <Agenda/>
+    <Agenda />
   );
 }
 
 function TodayScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Today!</Text>
-    </View>
+    <Today />
   );
 }
 
@@ -28,7 +27,7 @@ function StopWatchScreen() {
 
 function StatisticsSreen() {
   return (
-    <Statistics/>
+    <Statistics />
   );
 }
 
@@ -53,18 +52,20 @@ export default class App extends Component {
                 iconName = focused ? 'pencil-outline' : 'pencil';
               } else if (route.name === 'StopWatch') {
                 iconName = focused ? 'play-outline' : 'play';
-              }  else if (route.name === 'Statistics') {
+              } else if (route.name === 'Statistics') {
                 iconName = focused ? 'ios-bar-chart-outline' : 'ios-bar-chart';
               }
 
               // You can return any component that you like here!
               return <Icon name={iconName} size={size} color={color} />;
             }
-          })}
+          })
+        }
           tabBarOptions={{
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
           }}
+
         >
           <Tab.Screen name="Agenda" component={AgendaScreen} />
           <Tab.Screen name="Today" component={TodayScreen} />

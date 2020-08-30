@@ -20,7 +20,7 @@ export default class Statisics extends Component {
                 >
                     <Pie
                         radius={80}
-                        innerRadius={50}
+                        //innerRadius={75}
                         sections={[
                             {
                                 percentage: 10,
@@ -45,22 +45,6 @@ export default class Statisics extends Component {
                         ]}
                         strokeCap={'butt'}
                     /></View>
-                <View style={{ width: 175, alignItems: 'center' }}>
-                    <Pie
-                        radius={80}
-                        innerRadius={75}
-                        sections={[
-                            {
-                                percentage: 60,
-                                color: '#FA5858',
-                            },
-                        ]}
-                        backgroundColor="#ddd"
-                    />
-                    <View style={styles.gauge}>
-                        <Text style={styles.gaugeText} >60% </Text>
-                    </View>
-                </View>
             </View>
         )
     }
