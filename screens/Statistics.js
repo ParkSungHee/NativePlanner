@@ -3,13 +3,17 @@ import {
     StyleSheet,
     View,
     Text,
+    Animated,
 } from 'react-native'
 import Pie from 'react-native-pie'
 
+
 export default class Statisics extends Component {
     render() {
+        
         return (
             <View style={styles.container}>
+                
                 <View
                     style={{
                         paddingVertical: 15,

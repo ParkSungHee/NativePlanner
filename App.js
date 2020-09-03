@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -64,9 +64,7 @@ export default class App extends Component {
           tabBarOptions={{
             activeTintColor: 'tomato',
             inactiveTintColor: 'gray',
-          }}
-
-        >
+          }}>
           <Tab.Screen name="Agenda" component={AgendaScreen} />
           <Tab.Screen name="Today" component={TodayScreen} />
           <Tab.Screen name="StopWatch" component={StopWatchScreen} />

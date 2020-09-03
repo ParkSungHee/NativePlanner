@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
-import App from '../App'
 const testIDs = require('../testIDs');
 
 export default class AgendaScreen extends Component {
     constructor(props) {
         super(props);
-        this.renderItem = this.renderItem.bind(this);
 
         this.state = {
             items: {}
@@ -15,36 +13,21 @@ export default class AgendaScreen extends Component {
     }
 
     render() {
-        return (
-            <Agenda
-                testID={testIDs.agenda.CONTAINER}
-                items={this.state.items}
-                loadItemsForMonth={this.loadItems.bind(this)}
-                selected={'2017-05-16'}
-                renderItem={renderItem(item, this.props.navigation)}
-                renderEmptyDate={this.renderEmptyDate.bind(this)}
-                rowHasChanged={this.rowHasChanged.bind(this)}
-            // markingType={'period'}
-            // markedDates={{
-            //    '2017-05-08': {textColor: '#43515c'},
-            //    '2017-05-09': {textColor: '#43515c'},
-            //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
-            //    '2017-05-21': {startingDay: true, color: 'blue'},
-            //    '2017-05-22': {endingDay: true, color: 'gray'},
-            //    '2017-05-24': {startingDay: true, color: 'gray'},
-            //    '2017-05-25': {color: 'gray'},
-            //    '2017-05-26': {endingDay: true, color: 'gray'}}}
-            // monthFormat={'yyyy'}
-            // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
-            //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
-            // hideExtraDays={false}
-            />
+        return ( <></>
+            // <Agenda
+            //     testID={testIDs.agenda.CONTAINER}
+            //     items={this.state.items}
+            //     loadItemsForMonth={this.loadItems.bind(this)}
+            //     selected={'2017-05-16'}
+            //     renderEmptyDate={this.renderEmptyDate.bind(this)}
+            //     rowHasChanged={this.rowHasChanged.bind(this)}
+            // />
         );
     }
 
     loadItems(day) {
         setTimeout(() => {
-            for (let i = -15; i < 85; i++) {
+            for (let i = -15; i < 15; i++) {
                 const time = day.timestamp + i * 24 * 60 * 60 * 1000;
                 const strTime = this.timeToString(time);
                 if (!this.state.items[strTime]) {
@@ -66,15 +49,15 @@ export default class AgendaScreen extends Component {
         }, 1000);
     }
 
-    renderItem(item, navigation) {
+    renderItem(item) {
         return (
             <TouchableOpacity
                 testID={testIDs.agenda.ITEM}
                 style={[styles.item, { height: item.height }]}
                 onPress={item =>
-                    //Alert.alert(item.name) //여기서 Today로 가게끔 !!
+                    Alert.alert(item.name) //여기서 Today로 가게끔 !!
 
-                    {navigation.navigate('Today')}
+                    //{navigation.navigate('Today')}
                 }
             >
                 <Text>{item.name}</Text>
