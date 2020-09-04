@@ -13,15 +13,15 @@ export default class AgendaScreen extends Component {
     }
 
     render() {
-        return ( <></>
-            // <Agenda
-            //     testID={testIDs.agenda.CONTAINER}
-            //     items={this.state.items}
-            //     loadItemsForMonth={this.loadItems.bind(this)}
-            //     selected={'2017-05-16'}
-            //     renderEmptyDate={this.renderEmptyDate.bind(this)}
-            //     rowHasChanged={this.rowHasChanged.bind(this)}
-            // />
+        return ( 
+            <Agenda
+                testID={testIDs.agenda.CONTAINER}
+                items={this.state.items}
+                loadItemsForMonth={this.loadItems.bind(this)}
+                selected={'2017-05-16'}
+                renderEmptyDate={this.renderEmptyDate.bind(this)}
+                rowHasChanged={this.rowHasChanged.bind(this)}
+            />
         );
     }
 
@@ -82,7 +82,6 @@ export default class AgendaScreen extends Component {
         return date.toISOString().split('T')[0];
     }
 }
-
 
 const styles = StyleSheet.create({
     item: {

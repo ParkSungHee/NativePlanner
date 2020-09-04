@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions, StyleSheet, ToastAndroid } from 'react-native';
 import { LocaleConfig, CalendarList } from 'react-native-calendars';
 
-
 const chartHeight = Dimensions.get('window').height;
 const chartWidth = Dimensions.get('window').width;
 
@@ -14,7 +13,6 @@ LocaleConfig.locales['fr'] = {
     today: 'Aujourd\'hui'
 };
 LocaleConfig.defaultLocale = 'fr';
-
 
 export default class HomeScreen extends Component {
     render() {
@@ -49,7 +47,6 @@ export default class HomeScreen extends Component {
         );
     }
 }
-
 
 const styles = StyleSheet.create({
     calendar: {

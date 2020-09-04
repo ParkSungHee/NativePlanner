@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 import {
     StyleSheet,
-    View,
-    Text,
-    Animated,
+    View
 } from 'react-native'
 import Pie from 'react-native-pie'
 
-
 export default class Statisics extends Component {
     render() {
-        
         return (
             <View style={styles.container}>
-                
                 <View
                     style={{
                         paddingVertical: 15,
@@ -68,4 +63,9 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 24,
     },
+    text: {
+        fontSize: 30,
+        alignSelf: 'center',
+        color: 'red'
+    }
 })
