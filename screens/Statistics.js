@@ -4,11 +4,21 @@ import {
     View
 } from 'react-native'
 import Pie from 'react-native-pie'
+import CalendarStrip from 'react-native-calendar-strip';
+import { BarChart, Grid } from 'react-native-svg-charts'
 
-export default class Statisics extends Component {
+export default class Statisics extends React.PureComponent {
     render() {
+        const fill = 'rgb(134, 65, 244)'
+        const data = [50,undefined,45,undefined,55,undefined, 20,undefined, 40,undefined, 95,undefined, 100]
         return (
             <View style={styles.container}>
+                <CalendarStrip
+                    style={{ height: 120, paddingTop: 15, paddingBottom: 10 }}
+                />
+                <BarChart style={{ height: 200 }} data={data} svg={{ fill }} contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}>
+                    <Grid />
+                </BarChart>
                 <View
                     style={{
                         paddingVertical: 15,
@@ -44,13 +54,16 @@ export default class Statisics extends Component {
                         ]}
                         strokeCap={'butt'}
                     /></View>
+                
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: { alignItems: 'center', justifyContent: 'center', alignItems: 'center' },
+    container: {
+        flex: 1
+    },
     gauge: {
         position: 'absolute',
         width: 100,

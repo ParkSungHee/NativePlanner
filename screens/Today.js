@@ -15,13 +15,15 @@ export default class Today extends Component {
         super(props);
 
         this.state = {
-            Category: 'java',
+            Category: '시간',
             tableHead: ['분류', 'To do List', '목표', '달성'],
             tableData: [
                 ['0', '2', '3', '4'],
                 ['0', 'b', 'c', 'd'],
                 ['0', '2', '3', '4'],
-                ['0', 'b', 'c', 'd']
+                ['0', 'b', 'c', 'd'],
+                ['0', 'x', 'f', 'e'],
+                ['0', 'x', 'f', 'e']
             ]
         };
     }
@@ -36,8 +38,8 @@ export default class Today extends Component {
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({ Category: itemValue })
                         }>
-                        <Picker.Item label="Java" value="java" />
-                        <Picker.Item label="JavaScript" value="js" />
+                        <Picker.Item label="시간" value="time" />
+                        <Picker.Item label="분량" value="amount" />
                     </Picker>
             </TouchableOpacity>);
         return (
@@ -67,10 +69,10 @@ export default class Today extends Component {
                         <Text style={[styles.gaugeText, { paddingLeft: 6 }]}> 60% </Text>
                     </View>
                 </View>
-                <View style={[styles.content, { alignItems: 'center', marginTop: 7 }]}>
+                <View style={[styles.content, { alignItems: 'center', marginTop: 15 }]}>
                     <Text style={{ fontSize: 18 }}> 〈 2020년 8월 31일 〉 </Text>
                 </View>
-                <View style={[styles.footer, { marginTop: 15, margin: 10 }]} >
+                <View style={styles.footer} >
                     <View style={styles.containerTable}>
                         <Table borderStyle={{ borderColor: 'transparent' }}>
                             <Row data={state.tableHead} style={styles.head} textStyle={styles.text} />
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     footer: {
-        flex: 6
+        flex: 7
     },
     gauge: {
         position: 'absolute',
@@ -122,8 +124,8 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 24,
     },
-    containerTable: { flex: 1, padding: 16, paddingTop: 30 },
+    containerTable: { flex: 1, paddingLeft: 15, paddingRight:15 },
     head: { height: 40, backgroundColor: '#808B97' },
     text: { margin: 6 },
-    row: { flexDirection: 'row', backgroundColor: '#FFF1C1' }
+    row: { flexDirection: 'row'}
 });
