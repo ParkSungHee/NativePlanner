@@ -1,57 +1,108 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
-import { Stopwatch } from 'react-native-stopwatch-timer';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class StopWatch extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            stopwatchStart: false,
-            stopwatchReset: false
-        };
-        this.toggleStopwatch = this.toggleStopwatch.bind(this);
-        this.resetStopwatch = this.resetStopwatch.bind(this);
+            timer: null,
+            minutes_Counter: '00',
+            seconds_Counter: '00',
+            startDisable: false
+        }
     }
 
-    toggleStopwatch() {
-        this.setState({ stopwatchStart: !this.state.stopwatchStart, stopwatchReset: false });
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
     }
 
-    resetStopwatch() {
-        this.setState({ stopwatchStart: false, stopwatchReset: true });
+    onButtonStart = () => {
+        let timer = setInterval(() => {
+            var num = (Number(this.state.seconds_Counter) + 1).toString(),
+                count = this.state.minutes_Counter;
+
+            if (Number(this.state.seconds_Counter) == 59) {
+                count = (Number(this.state.minutes_Counter) + 1).toString();
+                num = '00';
+            }
+
+            this.setState({
+                minutes_Counter: count.length == 1 ? '0' + count : count,
+                seconds_Counter: num.length == 1 ? '0' + num : num
+            });
+        }, 1000);
+        this.setState({ timer });
+
+        this.setState({ startDisable: true })
     }
 
-    getFormattedTime(time) {
-        this.currentTime = time;
-    };
+    onButtonStop = () => {
+        clearInterval(this.state.timer);
+        this.setState({ startDisable: false })
+    }
+
+    onButtonClear = () => {
+        this.setState({
+            timer: null,
+            minutes_Counter: '00',
+            seconds_Counter: '00',
+        });
+    }
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ flex: 1, marginTop: 32, alignItems: 'center', justifyContent: 'center' }}>
-                <Stopwatch laps msecs start={this.state.stopwatchStart}
-                    reset={this.state.stopwatchReset}
-                    options={options}
-                    getTime={this.getFormattedTime} />
-                <TouchableHighlight onPress={this.toggleStopwatch}>
-                    <Text style={{ fontSize: 25 }}>{!this.state.stopwatchStart ? "Start" : "Stop"}</Text>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={this.resetStopwatch}>
-                    <Text style={{ fontSize: 25 }}>Reset</Text>
-                </TouchableHighlight>
-            </View>
+            <View style={styles.MainContainer}>
+                <Text style={styles.counterText}>{this.state.minutes_Counter} : {this.state.seconds_Counter}</Text>
+                <TouchableOpacity
+                    onPress={this.onButtonStart}
+                    activeOpacity={0.6}
+                    style={[styles.button, { backgroundColor: this.state.startDisable ? '#B0BEC5' : '#FF6347' }]}
+                    disabled={this.state.startDisable} >
+                    <Text style={styles.buttonText}>START</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onButtonStop}
+                    activeOpacity={0.6}
+                    style={[styles.button, { backgroundColor: '#FF6347' }]} >
+                    <Text style={styles.buttonText}>STOP</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onButtonClear}
+                    activeOpacity={0.6}
+                    style={[styles.button, { backgroundColor: this.state.startDisable ? '#B0BEC5' : '#FF6347' }]}
+                    disabled={this.state.startDisable} >
+                    <Text style={styles.buttonText}> CLEAR </Text>
+                </TouchableOpacity>
             </View>
         );
     }
 }
 
-const options = {
-    container: {
-        padding: 5,
-        borderRadius: 5,
-        width: 220
+
+
+const styles = StyleSheet.create({
+    MainContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
     },
-    text: {
-        fontSize: 33
+    button: {
+        width: '80%',
+        paddingTop: 8,
+        paddingBottom: 8,
+        borderRadius: 7,
+        marginTop: 10
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 20
+    },
+    counterText: {
+
+        fontSize: 28,
+        color: '#000'
     }
-};
+});

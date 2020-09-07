@@ -71,8 +71,7 @@ class AgendaScreen extends Component {
                 testID={testIDs.agenda.ITEM}
                 style={[styles.item, { height: item.height }]}
                 // navigate 해주면 됨. 두번째 파라미터로 데이터 전달 //
-                onPress={() => this.navigation.navigate('Today', item)}
-                >
+                onPress={() => this.navigation.navigate('Today', item)}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         );

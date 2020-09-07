@@ -75,11 +75,11 @@ export default class Today extends Component {
                         backgroundColor="#ddd"
                     />
                     <View style={styles.gauge}>
-                        <Text style={[styles.gaugeText, { paddingLeft: 6 }]}> 60% </Text>
+                    <Text style={[styles.gaugeText, { paddingLeft: 6 }]}> {'고치기'}% </Text>
                     </View>
                 </View>
                 <View style={[styles.content, { alignItems: 'center', marginTop: 15 }]}>
-                    <Text style={{ fontSize: 18 }}> {Agenda.day} </Text>  
+                    <Text style={{ fontSize: 18 }}> {'여기 고치기'} </Text>
                 </View>
                 <View style={styles.footer} >
                     <View style={styles.containerTable}>
