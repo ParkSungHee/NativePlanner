@@ -5,28 +5,34 @@ import {
 } from 'react-native'
 import Pie from 'react-native-pie'
 import CalendarStrip from 'react-native-calendar-strip';
-import { BarChart, Grid } from 'react-native-svg-charts'
+import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
 
 export default class Statisics extends React.PureComponent {
     render() {
+        const day = ["일", undefined, "월", undefined, "화", undefined, "수", undefined, "목", undefined, "금", undefined, "토"]
         const fill = 'rgb(134, 65, 244)'
-        const data = [50,undefined,45,undefined,55,undefined, 20,undefined, 40,undefined, 95,undefined, 100]
+        const data = [50, undefined, 45, undefined, 55, undefined, 20, undefined, 40, undefined, 95, undefined, 100]
         return (
             <View style={styles.container}>
                 <CalendarStrip
-                    style={{ height: 120, paddingTop: 15, paddingBottom: 10 }}
+                    style={{ height: 90, paddingTop: 15 }}
                 />
-                <BarChart style={{ height: 200 }} data={data} svg={{ fill }} contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}>
+                <BarChart
+                    style={{ height: 200, width: 380, marginLeft: 15 }}
+                    data={data} svg={{ fill }}
+                    contentInset={{ top: 10, bottom: 30, left: 10, right: 10 }}
+                    gridMin={0}
+                >
                     <Grid />
                 </BarChart>
-                <View
-                    style={{
-                        paddingVertical: 15,
-                        flexDirection: 'row',
-                        width: 350,
-                        justifyContent: 'space-between',
-                    }}
-                >
+                <XAxis
+                    style={{ marginHorizontal: 30, marginVertical: -20 }}
+                    data={data}
+                    formatLabel={(value, index) => day[index]}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
+                <View style={styles.content}>
                     <Pie
                         radius={80}
                         //innerRadius={75}
@@ -54,7 +60,6 @@ export default class Statisics extends React.PureComponent {
                         ]}
                         strokeCap={'butt'}
                     /></View>
-                
             </View>
         )
     }
@@ -80,5 +85,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         alignSelf: 'center',
         color: 'red'
+    },
+    content: {
+        marginTop: 30,
+        height: 160,
+        alignItems: 'center'
     }
 })

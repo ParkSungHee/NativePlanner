@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
-import App from '../App';
 import { useNavigation } from '@react-navigation/native';
 const testIDs = require('../testIDs');
 
@@ -14,16 +13,25 @@ class AgendaScreen extends Component {
         this.navigation = props.navigation;
         this.state = {
             items: {},
+            date: ''
         };
     }
-
+    componentDidMount() {
+        var year = new Date().getFullYear(); //Current Year
+        var month = new Date().getMonth() + 1; //Current Month
+        var day = new Date().getDay()+1; //Current Day
+        this.setState({
+            date:
+                year + '-' + month + '-' + day
+        });
+    }
     render() {
         return (
             <Agenda
                 testID={testIDs.agenda.CONTAINER}
                 items={this.state.items}
                 loadItemsForMonth={this.loadItems.bind(this)}
-                selected={'2017-05-16'}
+                selected={this.date}
                 renderItem={this.renderItem}
                 renderEmptyDate={this.renderEmptyDate.bind(this)}
                 rowHasChanged={this.rowHasChanged.bind(this)}
@@ -63,7 +71,8 @@ class AgendaScreen extends Component {
                 testID={testIDs.agenda.ITEM}
                 style={[styles.item, { height: item.height }]}
                 // navigate 해주면 됨. 두번째 파라미터로 데이터 전달 //
-                onPress={() => this.navigation.navigate('Today', item)}>
+                onPress={() => this.navigation.navigate('Today', item)}
+                >
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         );

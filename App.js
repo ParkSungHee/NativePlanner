@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Agenda from './screens/Agenda';
 import Statistics from './screens/Statistics';
 import Today from './screens/Today';
+import StopWatch from './screens/StopWatch';
 
 function AgendaScreen() {
   return (
@@ -21,7 +22,7 @@ function TodayScreen() {
 
 function StopWatchScreen() {
   return (
-    <></>
+    <StopWatch />
   );
 }
 

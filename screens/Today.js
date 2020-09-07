@@ -3,7 +3,8 @@ import {
     StyleSheet,
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native'
 import Pie from 'react-native-pie'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -50,7 +51,15 @@ export default class Today extends Component {
                         <Text style={{ fontSize: 20, paddingTop: 13 }}>계획 관리</Text>
                     </View>
                     <View style={{ flex: 2, alignItems: 'flex-end', marginRight: 7 }}>
-                        <Icon name={'checkmark-outline'} size={35} />
+                        <TouchableOpacity>
+                        <Icon 
+                            name={'checkmark-outline'} 
+                            size={35} 
+                            onPress={() => Alert.alert('저장하시겠습니까?','',[
+                                {text:'취소',onPress:()=>console.log('취소')},
+                                {text:'Ok',onPress:() => console.log('Ok')} 
+                            ])}/>
+                            </TouchableOpacity>
                     </View>
                 </View>
                 <View style={[styles.headertitle, { alignItems: 'center' }]}>
@@ -70,7 +79,7 @@ export default class Today extends Component {
                     </View>
                 </View>
                 <View style={[styles.content, { alignItems: 'center', marginTop: 15 }]}>
-                    <Text style={{ fontSize: 18 }}> 〈 2020년 8월 31일 〉 </Text>
+                    <Text style={{ fontSize: 18 }}> {Agenda.day} </Text>  
                 </View>
                 <View style={styles.footer} >
                     <View style={styles.containerTable}>
