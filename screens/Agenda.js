@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
-import { useNavigation } from '@react-navigation/native';
+import App from '../App';
 const testIDs = require('../testIDs');
 
-class AgendaScreen extends Component {
+export default class AgendaScreen extends Component {
     constructor(props) {
         super(props);
+        console.log('AgendaScreen props 접근: ', props);
         this.renderItem = this.renderItem.bind(this);
-
-        // 넘겨준 props에서 navigation 추출하여 멤버 변수로 할당 //
-        this.navigation = props.navigation;
         this.state = {
             items: {},
             date: ''
         };
     }
+
     componentDidMount() {
         var year = new Date().getFullYear(); //Current Year
         var month = new Date().getMonth() + 1; //Current Month
@@ -25,6 +24,7 @@ class AgendaScreen extends Component {
                 year + '-' + month + '-' + day
         });
     }
+
     render() {
         return (
             <Agenda
@@ -71,7 +71,7 @@ class AgendaScreen extends Component {
                 testID={testIDs.agenda.ITEM}
                 style={[styles.item, { height: item.height }]}
                 // navigate 해주면 됨. 두번째 파라미터로 데이터 전달 //
-                onPress={() => this.navigation.navigate('Today', item)}>
+                onPress={() => this.props.navigation.navigate('Today', { test: 'test' })}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         );
@@ -93,13 +93,6 @@ class AgendaScreen extends Component {
         const date = new Date(time);
         return date.toISOString().split('T')[0];
     }
-}
-
-// https://reactnavigation.org/docs/use-navigation/#using-with-class-component //
-// 함수를 이용해서 useNavigation(임의의 component에서 navigation에 접근할 수 있음, 단 class component에서는 불가) 현재 화면 클래스를 wrapping
-export default function (props) {
-    const navigation = useNavigation();
-    return <AgendaScreen {...props} navigation={navigation} />;
 }
 
 const styles = StyleSheet.create({

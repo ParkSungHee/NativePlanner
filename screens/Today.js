@@ -14,22 +14,24 @@ import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 export default class Today extends Component {
     constructor(props) {
         super(props);
+        console.log('TodayScreen에서 navigation 접근: ', props);
 
         this.state = {
             Category: '시간',
             tableHead: ['분류', 'To do List', '목표', '달성'],
             tableData: [
-                ['0', '2', '3', '4'],
-                ['0', 'b', 'c', 'd'],
-                ['0', '2', '3', '4'],
-                ['0', 'b', 'c', 'd'],
-                ['0', 'x', 'f', 'e'],
-                ['0', 'x', 'f', 'e']
+                ['', '', '', ''],
+                ['', '', '', ''],
+                ['', '', '', ''],
+                ['', '', '', ''],
+                ['', '', '', ''],
+                ['', '', '', '']
             ]
         };
     }
 
     render() {
+        console.log('AgendaScreen에서 넘어온 파라미터 접근: ', this.props.route);
         const state = this.state;
         const element = (data, index) => (
             <TouchableOpacity>
@@ -84,13 +86,19 @@ export default class Today extends Component {
                 <View style={styles.footer} >
                     <View style={styles.containerTable}>
                         <Table borderStyle={{ borderColor: 'transparent' }}>
-                            <Row data={state.tableHead} style={styles.head} textStyle={styles.text} />
+                            <Row 
+                                data={state.tableHead} 
+                                style={styles.head} 
+                                textStyle={styles.text} />
                             {
                                 state.tableData.map((rowData, index) => (
                                     <TableWrapper key={index} style={styles.row}>
                                         {
                                             rowData.map((cellData, cellIndex) => (
-                                                <Cell key={cellIndex} data={cellIndex === 0 ? element(cellData, index) : cellData} textStyle={styles.text} />
+                                                <Cell 
+                                                    key={cellIndex} 
+                                                    data={cellIndex === 0 ? element(cellData, index) : cellData} 
+                                                    textStyle={styles.text} />
                                             ))
                                         }
                                     </TableWrapper>

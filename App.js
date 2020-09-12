@@ -8,27 +8,27 @@ import Statistics from './screens/Statistics';
 import Today from './screens/Today';
 import StopWatch from './screens/StopWatch';
 
-function AgendaScreen() {
+// 탭을 생성할 때, react navigation 라이브러리가
+// 스크린이 될 컴포넌트에 navigation 객체를 props의 형태로 전달해야하기 때문에
+// props로 받은 것들을 모두 컴포넌트의 props로 넘겨주는 부분 필요
+// 그러면 Agenda.js의 코드와 같이 props에서 navigation을 접근할 수 있게 된다.
+function AgendaScreen(props) {
+  return <Agenda {...props} />;
+}
+
+function TodayScreen(props) {
+  return <Today {...props} />;
+}
+
+function StopWatchScreen(props) {
   return (
-    <Agenda />
+    <StopWatch {...props}/>
   );
 }
 
-function TodayScreen() {
+function StatisticsSreen(props) {
   return (
-    <Today />
-  );
-}
-
-function StopWatchScreen() {
-  return (
-    <StopWatch />
-  );
-}
-
-function StatisticsSreen() {
-  return (
-    <Statistics />
+    <Statistics {...props}/>
   );
 }
 
