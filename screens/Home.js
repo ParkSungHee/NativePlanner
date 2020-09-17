@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions, StyleSheet, ToastAndroid } from 'react-native';
 import { LocaleConfig, CalendarList } from 'react-native-calendars';
 
+
 const chartHeight = Dimensions.get('window').height;
 const chartWidth = Dimensions.get('window').width;
 

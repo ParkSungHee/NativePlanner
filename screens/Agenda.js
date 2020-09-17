@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
-import App from '../App';
 const testIDs = require('../testIDs');
 
 export default class AgendaScreen extends Component {
@@ -9,6 +8,7 @@ export default class AgendaScreen extends Component {
         super(props);
         console.log('AgendaScreen props 접근: ', props);
         this.renderItem = this.renderItem.bind(this);
+        _isMounted = false;
         this.state = {
             items: {},
             date: ''
@@ -16,13 +16,18 @@ export default class AgendaScreen extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         var year = new Date().getFullYear(); //Current Year
         var month = new Date().getMonth() + 1; //Current Month
-        var day = new Date().getDay()+1; //Current Day
+        var day = new Date().getDay() + 1; //Current Day
         this.setState({
             date:
                 year + '-' + month + '-' + day
         });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

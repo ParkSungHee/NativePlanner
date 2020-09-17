@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "687511265615",
+    "firebase_url": "https://nativeplan-5a958.firebaseio.com",
+    "project_id": "nativeplan-5a958",
+    "storage_bucket": "nativeplan-5a958.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687511265615:android:d9862c37fca9c6595b253a",
+        "android_client_info": {
+          "package_name": "com.plan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687511265615-37cc4hh7lu1u6vpe8ebq1s39aficsfrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxoH8mAYc51qCRV2LMTXsTNIxn_p2aC3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687511265615-37cc4hh7lu1u6vpe8ebq1s39aficsfrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
