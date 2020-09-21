@@ -20,16 +20,22 @@ const screenOptionStyle = {
 const AgendaStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name="Agenda" component={Agenda} />
+            <Stack.Screen name="To Do List">
+                {props => <Agenda {...props} />}
+            </Stack.Screen>
         </Stack.Navigator>
     )
 }
 
 const TodayStackNavigator = () => {
     return (
-        <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name="Today" component={Today} />
-            <Stack.Screen name="ToDo" component={ToDo} />
+        <Stack.Navigator screenOptions={screenOptionStyle} >
+            <Stack.Screen name="오늘의 계획">
+                {props => <Today {...props} />}
+            </Stack.Screen>
+            <Stack.Screen name="To Do">
+                {props => <ToDo {...props} />}
+            </Stack.Screen>
         </Stack.Navigator>
     );
 }
@@ -37,7 +43,9 @@ const TodayStackNavigator = () => {
 const StopWatchStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name="StopWatch" component={StopWatch} />
+            <Stack.Screen name="StopWatch" >
+                {props => <StopWatch {...props} />}
+            </Stack.Screen>
         </Stack.Navigator>
     )
 }
@@ -45,7 +53,9 @@ const StopWatchStackNavigator = () => {
 const StatisticsStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name="Statistics" component={Statistics} />
+            <Stack.Screen name="Statistics">
+                {props => <Statistics {...props} />}
+            </Stack.Screen>
         </Stack.Navigator>
     )
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { withNavigation } from '@react-navigation/native'
 
 export default class StopWatch extends Component {
     constructor(props) {
@@ -39,7 +40,11 @@ export default class StopWatch extends Component {
 
     onButtonStop = () => {
         clearInterval(this.state.timer);
-        this.setState({ startDisable: false })
+        this.setState({ startDisable: false });
+        this.props.navigation.navigate('Today', {
+            minutes:this.state.minutes_Counter,
+            seconds:this.state.seconds_Counter
+        })
     }
 
     onButtonClear = () => {
@@ -78,7 +83,7 @@ export default class StopWatch extends Component {
         );
     }
 }
-
+//withNavigation(StopWatch);
 
 
 const styles = StyleSheet.create({

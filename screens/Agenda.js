@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { Agenda } from 'react-native-calendars';
 const testIDs = require('../testIDs');
 
 export default class AgendaScreen extends Component {
     constructor(props) {
         super(props);
-        console.log('AgendaScreen props 접근: ', props);
         this.renderItem = this.renderItem.bind(this);
         _isMounted = false;
         this.state = {
@@ -75,7 +74,6 @@ export default class AgendaScreen extends Component {
             <TouchableOpacity
                 testID={testIDs.agenda.ITEM}
                 style={[styles.item, { height: item.height }]}
-                // navigate 해주면 됨. 두번째 파라미터로 데이터 전달 //
                 onPress={() => this.props.navigation.navigate('Today', { test: 'test' })}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>

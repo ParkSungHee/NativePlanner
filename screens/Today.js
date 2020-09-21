@@ -3,12 +3,12 @@ import {
     StyleSheet,
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native'
 import Pie from 'react-native-pie'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
-
+import AsyncStorage from '@react-native-community/async-storage'
 export default class Today extends Component {
     constructor(props) {
         super(props);
@@ -26,39 +26,29 @@ export default class Today extends Component {
                 ['', '', '', '']
             ]
         };
+        this.loadData = async () => {
+            try {
+                const jsonTodo = await AsyncStorage.getItem('@todo');
+                let json = JSON.parse(jsonTodo);
+                alert(json.category);
+            } catch (e) {
+                console.log(e);
+            }
+        };
     }
 
     render() {
-        console.log('AgendaScreen에서 넘어온 파라미터 접근: ', this.props.route);
-        const state = this.state;
-        const element = (data, index) => (
-            // <TouchableOpacity>
-            //     <Picker
-            //         selectedValue={this.state.Category}
-            //         style={{ height: 50, width: 100 }}
-            //         onValueChange={(itemValue, itemIndex) =>
-            //             this.setState({ Category: itemValue })
-            //         }>
-            //         <Picker.Item label="시간" value="time" />
-            //         <Picker.Item label="분량" value="amount" />
-            //     </Picker>
-            // </TouchableOpacity>
-            <></>
-        );
         return (
             <View style={styles.container}>
                 <View style={[styles.header]}>
                     <View style={{ flex: 2 }}></View>
-                    <View style={{ flex: 1, marginLeft: 6 }}>
-                        <Text style={{ fontSize: 20, paddingTop: 13 }}>계획 관리</Text>
-                    </View>
                     <View style={{ flex: 2, alignItems: 'flex-end', marginRight: 7, marginTop: 10 }}>
                         <TouchableOpacity>
                             <Icon
                                 name={'ios-add-outline'}
                                 size={33}
                                 onPress={() =>
-                                    this.props.navigation.navigate('ToDo', { test: 'test' })
+                                    this.props.navigation.navigate('To Do')
                                 }
                             />
                         </TouchableOpacity>
@@ -81,32 +71,23 @@ export default class Today extends Component {
                     </View>
                 </View>
                 <View style={[styles.content, { alignItems: 'center', marginTop: 15 }]}>
-                    <Text style={{ fontSize: 18 }}> {
-
-                    } </Text>
+    
                 </View>
                 <View style={styles.footer} >
                     <View style={styles.containerTable}>
-                        <Table borderStyle={{ borderColor: 'transparent' }}>
-                            <Row
-                                data={state.tableHead}
-                                style={styles.head}
-                                textStyle={styles.text} />
-                            {
-                                state.tableData.map((rowData, index) => (
-                                    <TableWrapper key={index} style={styles.row}>
-                                        {
-                                            rowData.map((cellData, cellIndex) => (
-                                                <Cell
-                                                    key={cellIndex}
-                                                    data={cellIndex === 0 ? element(cellData, index) : cellData}
-                                                    textStyle={styles.text} />
-                                            ))
-                                        }
-                                    </TableWrapper>
-                                ))
-                            }
-                        </Table>
+                        <TouchableOpacity>
+                            <Text
+                            onPress={() => Alert.alert('결과확인', 'ㅋㅋ', [
+                                { 
+                                    text:'취소',
+                                    onPress: () => this.loadData() 
+                                },
+                                {
+                                    text:'확인'
+                                }
+                            ])}>
+                                결과다</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
