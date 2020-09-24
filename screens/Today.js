@@ -4,11 +4,13 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Alert
+    Alert,
+    FlatList
 } from 'react-native'
 import Pie from 'react-native-pie'
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage'
+
 export default class Today extends Component {
     constructor(props) {
         super(props);
@@ -16,26 +18,47 @@ export default class Today extends Component {
 
         this.state = {
             Category: '시간',
-            tableHead: ['분류', 'To do List', '목표', '달성'],
-            tableData: [
-                ['', '', '', ''],
-                ['', '', '', ''],
-                ['', '', '', ''],
-                ['', '', '', ''],
-                ['', '', '', ''],
-                ['', '', '', '']
-            ]
+            todoList: {
+                key1 : {
+                    should: "백준",
+                    goal: "3문제"
+                },
+                key2 : {
+                    should: "강의 듣기",
+                    goal: "2개"
+                }
+            }
         };
         this.loadData = async () => {
             try {
                 const jsonTodo = await AsyncStorage.getItem('@todo');
                 let json = JSON.parse(jsonTodo);
-                alert(json.category);
+                alert(json.category + json.should + json.goal);
             } catch (e) {
                 console.log(e);
             }
         };
+        this.imm = () => {
+            let changed = {
+                ...this.state.todoList.key1,
+                should: "메롱"
+            }
+            return changed;
+        }
+
+        // navigation focus 가 변경되는 것을 감시하는 리스너 추가
+        // focus가 변경될 때 호출 됨
+        this.props.navigation.addListener('focus', () => {
+            this.getDataFromStopWatch();
+            //this.setState({})
+            // setState()로 셋팅하면 될듯?
+        });
     }
+
+    getDataFromStopWatch = async () => {
+        const stopWatchStopped = await AsyncStorage.getItem('stopWatchStopped');
+        console.log('##########', stopWatchStopped);
+    };
 
     render() {
         return (
@@ -66,28 +89,45 @@ export default class Today extends Component {
                         ]}
                         backgroundColor="#ddd"
                     />
-                    <View style={styles.gauge}>
-                        <Text style={[styles.gaugeText, { paddingLeft: 6 }]}> {'고치'}% </Text>
+                    <View style={styles.gauge}> 
+                        <Text style={[styles.gaugeText, { paddingLeft: 6 }]}>
+                            {' '}
+                            {'고치'}%{' '}
+                        </Text>
                     </View>
                 </View>
                 <View style={[styles.content, { alignItems: 'center', marginTop: 15 }]}>
-    
                 </View>
                 <View style={styles.footer} >
                     <View style={styles.containerTable}>
                         <TouchableOpacity>
                             <Text
-                            onPress={() => Alert.alert('결과확인', 'ㅋㅋ', [
-                                { 
-                                    text:'취소',
-                                    onPress: () => this.loadData() 
-                                },
-                                {
-                                    text:'확인'
-                                }
-                            ])}>
-                                결과다</Text>
+                                onPress={() => Alert.alert('결과확인', 'bb', [
+                                    {
+                                        text: '취소',
+                                        onPress: () => this.imm()+console.log(this.state)
+                                    },
+                                    {
+                                        text: '확인',
+                                        onPress: () => this.loadData()
+                                    }
+                                ])}>
+                                결과 : 
+                                </Text>
                         </TouchableOpacity>
+                        <FlatList
+                            data={this.state.datas}
+                            renderItem={({ item }) => {
+                                return (
+                                    <TouchableOpacity onPress={() => { Alert.alert(item.data); }}>
+                                        <View style={{ borderWidth: 1, borderRadius: 8, padding: 8, margin: 8 }}>
+                                            <Text>{item.todoList.key}</Text>
+                                            <Text>{item.todoList.should}</Text>
+                                        </View>
+                                    </TouchableOpacity>)
+                            }
+                            }>
+                        </FlatList>
                     </View>
                 </View>
             </View>

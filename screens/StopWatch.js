@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { withNavigation } from '@react-navigation/native'
+import { withNavigation } from '@react-navigation/compat';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default class StopWatch extends Component {
+class StopWatch extends Component {
     constructor(props) {
         super(props);
 
@@ -18,6 +19,11 @@ export default class StopWatch extends Component {
         clearInterval(this.state.timer);
     }
 
+
+    // 여기서는 초만 카운트 해서 state에 초만 가지고 있고,
+    // render()안에서 Text에 그릴 때 초를 가지고 /60, %60으로 계산해서 뿌려도 될듯?
+    // 초만 관리해야 데이터 관리가 조금 편해질듯. 그렇지 않으면 화면 여기저기 혹은 저장할때도 초와 분도 저장해야하기 때문에 불편.
+    // 꼭 하라는건 아니고 참고!
     onButtonStart = () => {
         let timer = setInterval(() => {
             var num = (Number(this.state.seconds_Counter) + 1).toString(),
@@ -38,14 +44,16 @@ export default class StopWatch extends Component {
         this.setState({ startDisable: true })
     }
 
-    onButtonStop = () => {
+    onButtonStop = async () => {
         clearInterval(this.state.timer);
         this.setState({ startDisable: false });
-        this.props.navigation.navigate('Today', {
-            minutes:this.state.minutes_Counter,
-            seconds:this.state.seconds_Counter
-        })
-    }
+
+        await AsyncStorage.setItem(
+            'stopWatchStopped',
+            String(this.state.seconds_Counter),
+        );
+        this.props.navigation.navigate('Today');
+    };
 
     onButtonClear = () => {
         this.setState({
@@ -83,7 +91,7 @@ export default class StopWatch extends Component {
         );
     }
 }
-//withNavigation(StopWatch);
+export default withNavigation(StopWatch);
 
 
 const styles = StyleSheet.create({
