@@ -9,20 +9,29 @@ import {
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import PropTypes from "prop-types"
 const { height, width } = Dimensions.get("window");
 
 export default class ToDo extends Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
             isEditing: false,
-            isCompleted: false,
-            toDoValue: ""
-        }
+            toDoValue: props.text
+        };
         console.log('ToDo props 접근: ', props);
     }
+
+    static PropTypes = {
+        text : PropTypes.string.isRequired,
+        isCompleted:PropTypes.bool.isRequired,
+        deleteToDo : PropTypes.func.isRequired,
+        id : PropTypes.string.isRequired,
+        uncompleteToDo : PropTypes.func.isRequired,
+        completeToDo : PropTypes.func.isRequired,
+        updateToDo : PropTypes.func.isRequired
+    };
 
     componentDidMount() {
         var year = new Date().getFullYear(); //Current Year
@@ -35,8 +44,8 @@ export default class ToDo extends Component {
     }
 
     render() {
-        const { isCompleted, isEditing, toDoValue } = this.state;
-        const {text}=this.props;
+        const { isEditing, toDoValue } = this.state;
+        const { text, id, deleteToDo, isCompleted }=this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.column}>
@@ -83,7 +92,7 @@ export default class ToDo extends Component {
                                     <Icon name={'pencil-outline'} size={25} />
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPressOut={() => deleteToDo(id)}>
                                 <View style={styles.actionContainer}>
                                     <Icon name={'close-outline'} size={40} />
                                 </View>
@@ -94,20 +103,22 @@ export default class ToDo extends Component {
         )
     }
     _toggleComplete = () => {
-        this.setState(prevState => {
-            return ({
-                isCompleted: !prevState.isCompleted
-            })
-        })
+        const { isCompleted, uncompleteToDo, completeToDo, id } = this.props;
+        if(isCompleted){
+            uncompleteToDo(id)
+        } else {
+            completeToDo(id);
+        }
     }
     _startEditing = () => {
-        const { text } = this.props;
         this.setState({
-            isEditing: true,
-            toDoValue: text
+            isEditing: true
         });
     };
     _finishEditing = () => {
+        const { toDoValue } = this.state;
+        const { id, updateToDo } = this.props;
+        updateToDo(id, toDoValue);
         this.setState({
             isEditing: false
         })

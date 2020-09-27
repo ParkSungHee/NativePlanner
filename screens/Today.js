@@ -69,7 +69,15 @@ export default class Today extends Component {
                         onSubmitEditing={this._addToDo}
                         />
                     <ScrollView contentContainerStyle={styles.toDos}>
-                        {Object.values(toDos).map(toDo => <ToDo key={toDo.id} {...toDo} />)}
+                        {Object.values(toDos).map(toDo => 
+                            <ToDo 
+                                key={toDo.id} {...toDo} 
+                                deleteToDo={this._deleteToDo}
+                                uncompleteToDo={this._uncompleteToDo}
+                                completeToDo={this._completeToDo}
+                                updateToDo={this._updateToDo}
+                            />
+                        )}
                     </ScrollView>
                 </View>
             </View>
@@ -111,6 +119,62 @@ export default class Today extends Component {
             })
             
         }
+    };
+    _deleteToDo = (id) => {
+        this.setState(prevState => {
+            const toDos = prevState.toDos;
+            delete toDos[id];
+            const newState = {
+                ...prevState,
+                ...toDos
+            };
+            return {...newState};
+        })
+    };
+    _uncompleteToDo = (id) => {
+        this.setState(prevState => {
+            const newState = {
+                ...prevState,
+                toDos: {
+                    ...prevState.toDos,
+                    [id] : {
+                        ...prevState.toDos[id],
+                        isCompleted:false
+                    }
+                }
+            }
+            return {...newState};
+        })
+    }
+    _completeToDo = (id) => {
+        this.setState(prevState => {
+            const newState = {
+                ...prevState,
+                toDos: {
+                    ...prevState.toDos,
+                    [id] : {
+                        ...prevState.toDos[id],
+                        isCompleted:true
+                    }
+                }
+            }
+            return {...newState};
+        })
+    };
+    _updateToDo = (id, text) => {
+        this.setState(prevState => {
+            const newState = {
+                ...prevState,
+                toDos: {
+                    ...prevState.toDos,
+                    [id] : {
+                        ...prevState.toDos[id],
+                        text:text
+                    }
+                }
+            }
+            return {...newState};
+        })
     }
 }
 
