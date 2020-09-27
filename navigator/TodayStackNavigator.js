@@ -1,11 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import Agenda from '../screens/Agenda';
-import Statistics from '../screens/Statistics';
 import Today from '../screens/Today';
 import StopWatch from '../screens/StopWatch';
-import ToDo from '../screens/ToDo';
+import ToDo from '../screens/(예전)ToDo';
 
 const Stack = createStackNavigator();
 
@@ -33,9 +31,6 @@ const TodayStackNavigator = () => {
             <Stack.Screen name="오늘의 계획">
                 {props => <Today {...props} />}
             </Stack.Screen>
-            <Stack.Screen name="To Do">
-                {props => <ToDo {...props} />}
-            </Stack.Screen>
         </Stack.Navigator>
     );
 }
@@ -50,14 +45,4 @@ const StopWatchStackNavigator = () => {
     )
 }
 
-const StatisticsStackNavigator = () => {
-    return (
-        <Stack.Navigator screenOptions={screenOptionStyle}>
-            <Stack.Screen name="Statistics">
-                {props => <Statistics {...props} />}
-            </Stack.Screen>
-        </Stack.Navigator>
-    )
-}
-
-export { AgendaStackNavigator, TodayStackNavigator, StopWatchStackNavigator, StatisticsStackNavigator };
+export { AgendaStackNavigator, TodayStackNavigator, StopWatchStackNavigator };

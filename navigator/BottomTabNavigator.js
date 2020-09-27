@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AgendaStackNavigator, TodayStackNavigator, StopWatchStackNavigator, StatisticsStackNavigator } from "./TodayStackNavigator";
+import { AgendaStackNavigator, TodayStackNavigator, StopWatchStackNavigator } from "./TodayStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,8 +18,6 @@ const BottomTabNavigator = () => {
                         iconName = focused ? 'pencil-outline' : 'pencil';
                     } else if (route.name === 'StopWatch') {
                         iconName = focused ? 'play-outline' : 'play';
-                    } else if (route.name === 'Statistics') {
-                        iconName = focused ? 'ios-bar-chart-outline' : 'ios-bar-chart';
                     }
 
 
@@ -33,9 +31,8 @@ const BottomTabNavigator = () => {
                 inactiveTintColor: 'gray',
             }}>
             <Tab.Screen name="Agenda" component={AgendaStackNavigator} />
-            <Tab.Screen name="Today" component={TodayStackNavigator} />
             <Tab.Screen name="StopWatch" component={StopWatchStackNavigator} />
-            <Tab.Screen name="Statistics" component={StatisticsStackNavigator} />
+            <Tab.Screen name="Today" component={TodayStackNavigator} />
         </Tab.Navigator>
     );
 }

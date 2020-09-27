@@ -3,55 +3,25 @@ import {
     StyleSheet,
     View,
     Text,
+    Dimensions,
     TouchableOpacity,
-    Alert,
     TextInput
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const { height, width } = Dimensions.get("window");
 
 export default class ToDo extends Component {
     constructor(props) {
         super(props);
-        console.log('ToDo props 접근: ', props);
 
         this.state = {
-            category: "",
-            should: "",
-            goal: "",
-            text: ""
-        };
-
-        this.saveItem = async (value) => {
-            try {
-                const jsonTodo = JSON.stringify(value)
-                await AsyncStorage.setItem('@todo', jsonTodo);
-                alert('saved data');
-            } catch (e) {
-                console.log(e);
-            }
-        };
-
-        this.loadData = async () => {
-            try {
-                const jsonTodo = await AsyncStorage.getItem('@todo');
-                let json = JSON.parse(jsonTodo);
-                alert(json.category);
-            } catch (e) {
-                console.log(e);
-            }
+            isEditing: false,
+            isCompleted: false,
+            toDoValue: ""
         }
-
-        this.handlCategory = (should, goal) => {
-            this.setState({ category: should, goal: goal });
-        };
-
-        this.handleShould = text => {
-            this.setState({ should: text });
-        };
-
-        this.handleGoal = text => {
-            this.setState({ goal: text });
-        };
+        console.log('ToDo props 접근: ', props);
     }
 
     componentDidMount() {
@@ -65,83 +35,140 @@ export default class ToDo extends Component {
     }
 
     render() {
+        const { isCompleted, isEditing, toDoValue } = this.state;
+        const {text}=this.props;
         return (
             <View style={styles.container}>
-                <View style={{ flex: 8, margin: 60 }}>
-                    <TouchableOpacity>
-                        <View style={styles.input}>
-                            <Text
-                                value={this.state.category}
-                                style={{ marginTop: 10 }}
-                                onPress={() => Alert.alert('선택하십시오', '', [
-                                    { text: '시간', onPress: () => { this.handlCategory('시간') } },
-                                    { text: '분량', onPress: () => { this.handlCategory('분량') } }
-                                ])}>{this.state.category}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TextInput
-                        style={styles.input}
-                        underlineColorAndroid="transparent"
-                        placeholder="해야할 것"
-                        placeholderTextColor="#FA5858"
-                        autoCapitalize="none"
-                        onChangeText={this.handleShould}
-                        value={this.state.should}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        underlineColorAndroid="transparent"
-                        placeholder="목표"
-                        placeholderTextColor="#FA5858"
-                        autoCapitalize="none"
-                        onChangeText={this.handleGoal}
-                        value={this.state.goal}
-                    />
-                    <TouchableOpacity
-                        style={styles.submitButton}
-                        onPress={() => Alert.alert('저장하시겠습니까?', '', [ //읽기는 this.loadData()
-                            { text: '취소' },
-                            {
-                                text: 'Ok', onPress: () => { 
-                                    this.saveItem(this.state) 
-                                    + this.props.navigation.goBack('Today',{ //고치기
-                                        category : this.state.category,
-                                        should : this.state.should,
-                                        goal : this.state.goal}
-                                        )
-                                }
-                            }
-                        ]
-                        )}
-                    >
-                        <Text style={styles.submitButtonText}>Submit</Text>
-                    </TouchableOpacity>
-                    <Text>{this.state.text}</Text>
+                <View style={styles.column}>
+                <TouchableOpacity onPress={this._toggleComplete}>
+                    <View style={[
+                        styles.circle,
+                        isCompleted ? styles.completedCircle : styles.uncompletedCircle
+                    ]} />
+                </TouchableOpacity>
+                { isEditing ? (
+                    <TextInput 
+                        style={[
+                            styles.text,
+                            styles.input,
+                            isCompleted ? styles.completedText : styles.uncompletedText]} 
+                        value={toDoValue} 
+                        multiline={true}
+                        onChangeText={this._controlInput}
+                        returnKeyType={"done"}
+                        onBlur={this._finishEditing}
+                        />
+                ) : (
+                    <Text 
+                        style={[
+                            styles.text,
+                            isCompleted ? styles.completedText : styles.uncompletedText
+                        ]}>
+                            {text}
+                        </Text>
+                    )}
                 </View>
+                {isEditing ? (
+                    <View style={styles.actions}>
+                        <TouchableOpacity onPressOut={this._finishEditing}>
+                            <View style={[styles.actionContainer, { paddingRight: 15 }]}>
+                                <Icon name={'checkbox-outline'} size={30} />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                        <View style={styles.actions}>
+                            <TouchableOpacity onPressOut={this._startEditing}>
+                                <View style={[styles.actionContainer, { paddingTop: 8 }]} >
+                                    <Icon name={'pencil-outline'} size={25} />
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <View style={styles.actionContainer}>
+                                    <Icon name={'close-outline'} size={40} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    )}
             </View>
         )
+    }
+    _toggleComplete = () => {
+        this.setState(prevState => {
+            return ({
+                isCompleted: !prevState.isCompleted
+            })
+        })
+    }
+    _startEditing = () => {
+        const { text } = this.props;
+        this.setState({
+            isEditing: true,
+            toDoValue: text
+        });
+    };
+    _finishEditing = () => {
+        this.setState({
+            isEditing: false
+        })
+    }
+    _controlInput = (text) => {
+        this.setState({
+            toDoValue : text
+        })
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center'
+        width: width - 50,
+        borderBottomColor: "#bbb",
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
     },
-    input: {
-        margin: 15,
-        height: 40,
-        borderColor: "#FA5858",
-        borderWidth: 1
+    circle: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        borderWidth: 3,
+        marginRight: 20,
+        marginLeft: 10
     },
-    submitButton: {
-        backgroundColor: "#FA5858",
-        padding: 10,
-        margin: 15,
-        height: 40
+    text: {
+        fontWeight: "600",
+        fontSize: 20,
+        marginVertical: 20
     },
-    submitButtonText: {
-        color: "white"
+    completedCircle: {
+        borderColor: "#bbb"
+    },
+    uncompletedCircle: {
+        borderColor: "#FA5858"
+    },
+    completedText: {
+        color: "#bbb",
+        textDecorationLine: "line-through"
+    },
+    uncompletedText: {
+        color: "#353839"
+    },
+    column: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: width / 2
+    },
+    actions: {
+        flexDirection: "row"
+    },
+    actionContainer: {
+        marginVertical: 5,
+        marginHorizontal: 5
+    },
+    input : {
+        width: width/2,
+        marginVertical:15,
+        paddingBottom:5
     }
 });
